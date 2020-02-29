@@ -1,34 +1,34 @@
-package com.example.Spring5.Web.App;
-//Using JPA
-//d2 url: http://localhost:8080/h2-console
-//d2 driver url: jdbc:h2:mem:testdb
+package com.example.Spring5.Web.App.domain;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+//JPA (Java Persistence) is an interface.
 
-@Entity
+@Entity //Tells Hibernate that this is an entity. Hibernate uses JPA
 public class Author {
-    //Making this a primary key is what we call leakage. B/C truly in an OO World we don't care about an ID/Primary Key
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)  //Not sure if oracle supports this but MySql and d2 do. 
+
+    @Id //Tells hibernates this is the primary key
+    @GeneratedValue(strategy = GenerationType.AUTO) //Tells hibernate this key is automatically generated.
     private Long id;
+
     private String firstName;
     private String lastName;
 
-    @ManyToMany(mappedBy = "authors")
-    private Set<Book> books = new HashSet<>();
+    @ManyToMany(mappedBy = "authors") //We are saying the author POJO has a many-many relationship with books
+    private Set<Book> books = new HashSet<>(); //In the books POJO, we created a join table to connect books and author in separate table
 
-    public Author(){
+    //JPA requires a 0 arg constructor
+    //JPA is an Object Relational Mapping tool
+
+    public Author() {
+
     }
 
-    public Author(String firstName, String lastName){
+    public Author(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
 
-    public Author(String firstName, String lastName, Set<Book> books){
-        this(firstName,lastName);
-        this.books = books;
     }
 
     public Long getId() {
@@ -77,4 +77,16 @@ public class Author {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", books=" + books +
+                '}';
+    }
 }
+
+//Leakage means we are mixing classes with databases. We are treading the database territory

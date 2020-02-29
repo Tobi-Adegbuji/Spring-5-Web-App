@@ -1,9 +1,8 @@
 package com.example.Spring5.Web.App.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity //A JPA Entity
 public class Publisher {
@@ -16,6 +15,12 @@ public class Publisher {
     private String city;
     private String state;
     private String zip;
+
+    //The publisher is one, and has many books. You will annotate the opposite in the book class
+    @OneToMany
+    //This is giving hibernate a hint to add publisher id to the book table as a foreign key 
+    @JoinColumn(name = "publisher_id")
+    private Set<Book> books = new HashSet<>(); //You must always initialize Set or you'll get NULL Pointer Exception error.
 
     public Publisher(){
         ///No Arg Constructor (JPA Requires this
@@ -72,6 +77,14 @@ public class Publisher {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     @Override

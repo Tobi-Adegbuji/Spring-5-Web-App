@@ -24,7 +24,7 @@ public class BookController {
         //The will have an attribute of an instance of our book repo which will then be returned to the view layer
         model.addAttribute("books", bookRepository.findAll());
 
-        return "books";
+        return "books/list";
     }
 
 }

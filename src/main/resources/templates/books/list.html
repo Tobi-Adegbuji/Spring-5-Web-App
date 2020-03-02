@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--The xmlns references the thymeleaf name space. This will give us references to this-->
+<!--thymeleaf document on this website-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf Example</title>
+</head>
+<body>
+<h1>Book List</h1>
+
+<table>
+    <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Publisher</th>
+    </tr>
+<!--    th stands for thymeleaf. We asking thymeleaf to get books mode-->
+<!--    the each is saying we want an iterator over books-->
+    <tr th:each="book : ${books}">
+    <td th:text="${book.id}">123</td>
+    <td th:text="${book.title}">Spring in Action</td>
+    <td th:text="${book.publisher.name}">Wrow</td>
+    </tr>
+</table>
+
+</body>
+</html>
